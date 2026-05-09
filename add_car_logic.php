@@ -1,7 +1,7 @@
 <?php
-include 'dbconnect.php';
+include 'db_connect.php';
 
-if ($_POST) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $seller_id = 1;
     $car_model = $_POST['car_model'];
     $color = $_POST['color'];
@@ -10,15 +10,18 @@ if ($_POST) {
     $price = str_replace(',', '', $_POST['price']);
     $car_image = "default.jpg";
 
-    $sql = "INSERT INTO cars (seller_id, car_model, color, year, location, price, car_image)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, 'issssis', $seller_id, $car_model, $color, $year, $location, $price, $car_image);
+    $query = "INSERT INTO cars (seller_id, car_model, color, year, location, price, car_image)
+              VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_prepare($conn, $query);
+    mysqli_stmt_bind_param($stmt, "issssis", $seller_id, $car_model, $color, $year, $location, $price, $car_image);
 
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: add_vehicle.php?success=1");
+        header("Location: AddCar.html?status=success");
     } else {
-        echo "Error: " . mysqli_error($conn);
+        header("Location: AddCar.html?status=error");
     }
+
+    mysqli_stmt_close($stmt);
 }
 ?>
