@@ -1,5 +1,5 @@
 <?php
-include 'dbconnect.php';
+include 'db_connect.php';
 
 $msg = "";
 
@@ -9,210 +9,21 @@ if ($_POST) {
     $color = $_POST['color'];
     $year = $_POST['year'];
     $location = $_POST['location'];
-    $price = $_POST['price'];
+    
+    $price = str_replace(',', '', $_POST['price']);
+    
     $car_image = "default.jpg";
 
     $sql = "INSERT INTO cars (seller_id, car_model, color, year, location, price, car_image)
-            VALUES ('$seller_id', '$car_model', '$color', '$year', '$location', '$price', '$car_image')";
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    if (mysqli_query($conn, $sql)) {
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "issssis", $seller_id, $car_model, $color, $year, $location, $price, $car_image);
+
+    if (mysqli_stmt_execute($stmt)) {
         $msg = "Car published successfully!";
     } else {
         $msg = "Error: " . mysqli_error($conn);
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Addcar - CarNext</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            .logo-img {
-                position: absolute;
-                top: 5px;
-                left: 20px;
-                width: 100px;
-                height: auto;
-                z-index: 999;
-            }
-
-            .links {
-                background-color: gray;
-                text-align: center;
-                padding: 15px 10px;
-                margin-top: 10px;
-            }
-
-            .links a {
-                display: inline-block;
-                color: white;
-                font-size: 18px;
-                margin: 5px 10px;
-                padding: 10px 15px;
-                text-decoration: none;
-                border-radius: 4px;
-            }
-
-            .links a:hover {
-                background-color: darkgray;
-                color: black;
-            }
-
-            .links a.active {
-                background-color: darkgray;
-                color: black;
-            }
-            
-            .publish-container {
-                background: #f8f9fa;
-                padding: 50px 20px;
-                min-height: calc(100vh - 230px);
-                display: flex;
-                align-items: center;
-            }
-            .publish-box {
-                max-width: 700px;
-                width: 100%;
-                margin: 0 auto;
-                background: white;
-                padding: 25px;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            }
-            .publish-box h2 {
-                border-bottom: 2px solid #eee;
-                padding-bottom: 10px;
-                margin-bottom: 25px;
-                text-align: center;
-                color: #333;
-            }
-            .form-group {
-                margin-bottom: 20px;
-            }
-            .form-group label {
-                display: block;
-                margin-bottom: 8px;
-                font-weight: bold;
-                color: #444;
-            }
-            .form-group input,
-            .form-group select {
-                width: 100%;
-                padding: 12px 15px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 16px;
-            }
-            .btn-submit {
-                background-color: #28a745;
-                color: white;
-                padding: 14px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                width: 100%;
-                font-size: 16px;
-                font-weight: bold;
-                margin-top: 10px;
-            }
-            .btn-submit:hover {
-                background-color: #218838;
-            }
-
-            .footer {
-                background-color: dimgray;
-                color: white;
-                text-align: center;
-                padding: 20px;
-            }
-
-            @media (max-width: 768px) {
-                .links a {
-                    font-size: 16px;
-                    padding: 8px 12px;
-                }
-                .publish-box {
-                    padding: 20px;
-                }
-            }
-
-            @media (max-width: 576px) {
-                .logo-img {
-                    width: 80px;
-                    left: 10px;
-                }
-                .publish-container {
-                    padding: 30px 15px;
-                }
-                .publish-box {
-                    padding: 18px;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <img src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/LOGO.jpg?raw=true" class="logo-img">
-        
-        <nav>
-            <div class="logo"></div>
-            <div class="links">
-                <a href="Home.html">HOME</a>
-                <a href="Search.html">SEARCH</a>
-                <a href="AddCar.html">SELL</a>
-                <a href="Login.html">LOGIN</a>
-                <a href="Register.html">REGISTER</a>
-            </div>
-        </nav>
-
-        <div class="publish-container">
-            <div class="publish-box">
-                <h2>Publish New Car</h2>
-
-                <div class="form-group">
-                    <label>Car Model</label>
-                    <input type="text" placeholder="e.g. Toyota GR 86, Ford Mustang">
-                </div>
-
-                <div class="form-group">
-                    <label>Color</label>
-                    <input type="text" placeholder="e.g. White, Black">
-                </div>
-
-                <div class="form-group">
-                    <label>Year</label>
-                    <input type="text" placeholder="e.g. 2020">
-                </div>
-
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" placeholder="e.g. Beijing, Shanghai">
-                </div>
-
-                <div class="form-group">
-                    <label>Price (RMB)</label>
-                    <input type="text" placeholder="e.g. 258,000">
-                </div>
-
-                <div class="form-group">
-                    <label>Car Image</label>
-                    <input type="file" accept="image/*">
-                </div>
-
-                <button class="btn-submit">Submit Car Information</button>
-            </div>
-        </div>
-
-        <div class="footer">
-            © 2026 CarNext Car Trading System | All Rights Reserved
-        </div>
-    </body>
-</html>
