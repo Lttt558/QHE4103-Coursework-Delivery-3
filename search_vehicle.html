@@ -1,0 +1,90 @@
+<?php
+include 'db_connect.php'; // Include database connection
+
+// Initialize search variables
+$search_query = "";
+$sql = "SELECT * FROM vehicles WHERE 1=1"; // Base query
+
+// Search by Make or Model
+if (isset($_GET['search'])) {
+    $search_query = $_GET['search'];
+    // Fuzzy search: searches in both Make and Model columns
+    $sql .= " AND (make LIKE '%$search_query%' OR model LIKE '%$search_query%')";
+}
+
+// Filter by Year
+if (isset($_GET['year_filter'])) {
+    $year_filter = $_GET['year_filter'];
+    $sql .= " AND year = '$year_filter'";
+}
+
+// Execute query
+$result = $conn->query($sql);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Vehicles</title>
+    <style>
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .search-box { text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="search-box">
+    <h2>🔍 Find Your Dream Car</h2>
+    <!-- Search Form -->
+    <form action="search_vehicle.php" method="GET">
+        <input type="text" name="search" placeholder="Search by Make or Model (e.g. Toyota)" value="<?php echo htmlspecialchars($search_query); ?>" style="padding: 10px; width: 40%;">
+        
+        <select name="year_filter" style="padding: 10px;">
+            <option value="">All Years</option>
+            <option value="2024" <?php if(isset($_GET['year_filter']) && $_GET['year_filter']=='2024') echo 'selected'; ?>>2024</option>
+            <option value="2023" <?php if(isset($_GET['year_filter']) && $_GET['year_filter']=='2023') echo 'selected'; ?>>2023</option>
+            <option value="2022" <?php if(isset($_GET['year_filter']) && $_GET['year_filter']=='2022') echo 'selected'; ?>>2022</option>
+        </select>
+        
+        <button type="submit" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none;">Search</button>
+    </form>
+    <p><a href=" ">Seller Login</a ></p >
+</div>
+
+<!-- Search Results Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Price</th>
+            <th>Seller ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row["make"] . "</td>";
+                echo "<td>" . $row["model"] . "</td>";
+                echo "<td>" . $row["year"] . "</td>";
+                echo "<td>$" . number_format($row["price"], 2) . "</td>";
+                echo "<td>" . $row["seller_id"] . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5' style='text-align:center;'>No vehicles found</td></tr>";
+        }
+        $conn->close();
+        ?>
+    </tbody>
+</table>
+
+</body>
+</html>
