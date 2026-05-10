@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Search - CarNext</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .logo-img {
+                position: absolute;
+                top: 5px;
+                left: 20px;
+                width: 100px;
+                height: auto;
+                z-index: 999;
+            }
+
+            .links {
+                background-color: gray;
+                text-align: center;
+                padding: 15px 10px;
+                margin-top: 10px;
+            }
+
+            .links a {
+                display: inline-block;
+                color: white;
+                font-size: 18px;
+                margin: 5px 10px;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+
+            .links a:hover {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .links a.active {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .search-container {
+                max-width: 1200px;
+                margin: 40px auto;
+                padding: 0 20px;
+            }
+
+            .search-bar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 30px;
+                padding: 15px;
+                background: #e9ecef;
+                border-radius: 4px;
+            }
+            .search-bar input, .search-bar select {
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                flex: 1;
+                min-width: 120px;
+            }
+            .btn-search {
+                background: #007bff;
+                color: white;
+                border: none;
+                padding: 12px 25px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .car-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 30px;
+            }
+            .car-card {
+                border: 1px solid #eee;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: transform 0.2s;
+                cursor: pointer;
+                background: white;
+            }
+            .car-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+            .car-img {
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                background: #ddd;
+            }
+            .car-info {
+                padding: 15px;
+            }
+            .car-title {
+                font-size: 1.1rem;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .car-price {
+                color: #007bff;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            .car-meta {
+                color: #666;
+                font-size: 0.9rem;
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .footer {
+                background-color: dimgray;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                margin-top: 40px;
+            }
+
+            @media (max-width: 768px) {
+                .links a {
+                    font-size: 16px;
+                    padding: 8px 12px;
+                }
+                .car-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                    gap: 20px;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .logo-img {
+                    width: 80px;
+                    left: 10px;
+                }
+                .search-bar {
+                    flex-direction: column;
+                }
+                .btn-search {
+                    width: 100%;
+                }
+                .car-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <img src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/LOGO.jpg?raw=true" class="logo-img">
+        
+        <nav>
+            <div class="logo"></div>
+            <div class="links">
+                <a href="Home.html">HOME</a>
+                <a href="Search.html">SEARCH</a>
+                <a href="AddCar.html">SELL</a>
+                <a href="Login.html">LOGIN</a>
+                <a href="Register.html">REGISTER</a>
+            </div>
+        </nav>
+
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" placeholder="Car model...">
+                <input type="text" placeholder="Year...">
+                <button class="btn-search">Search</button>
+            </div>
+
+            <div class="car-grid">
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2022-Toyota-GR-86-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Toyota GR 86</div>
+                        <div class="car-price">RMB308,000</div>
+                        <div class="car-meta">
+                            <span>2022</span>
+                            <span>Petrol</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2018-Ford-Mustang-GT-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Ford Mustang GT</div>
+                        <div class="car-price">RMB258,000</div>
+                        <div class="car-meta">
+                            <span>2018</span>
+                            <span>Petrol</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2022-BMW-M135i-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">BMW M135i</div>
+                        <div class="car-price">RMB168,800</div>
+                        <div class="car-meta">
+                            <span>2022</span>
+                            <span>Petrol</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2022-Kia-Stinger-GT-002-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Kia Stinger GT</div>
+                        <div class="car-price">RMB148,000</div>
+                        <div class="car-meta">
+                            <span>2022</span>
+                            <span>Petrol</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2017-Volvo-S90-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Volvo S90</div>
+                        <div class="car-price">RMB118,000</div>
+                        <div class="car-meta">
+                            <span>2017</span>
+                            <span>Petrol</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2018-Tesla-Model-3-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Tesla Model 3</div>
+                        <div class="car-price">RMB99,000</div>
+                        <div class="car-meta">
+                            <span>2018</span>
+                            <span>Electric</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 CarNext Car Trading System | All Rights Reserved
+        </div>
+    </body>
+</html>
