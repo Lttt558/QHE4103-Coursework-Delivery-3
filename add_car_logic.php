@@ -1,27 +1,48 @@
 <?php
-include 'db_connect.php';
+require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $seller_id = 1;
-    $car_model = $_POST['car_model'];
-    $color = $_POST['color'];
-    $year = $_POST['year'];
-    $location = $_POST['location'];
-    $price = str_replace(',', '', $_POST['price']);
-    $car_image = "default.jpg";
+$model = isset($_GET['model']) ? trim($_GET['model']) : '';
+$year = isset($_GET['year']) ? trim($_GET['year']) : '';
 
-    $query = "INSERT INTO cars (seller_id, car_model, color, year, location, price, car_image)
-              VALUES (?, ?, ?, ?, ?, ?, ?)";
+$sql = "SELECT c.*, s.fullname as seller_name, s.phone as seller_phone 
+        FROM cars c 
+        LEFT JOIN sellers s ON c.seller_id = s.seller_id 
+        WHERE 1=1";
 
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "issssis", $seller_id, $car_model, $color, $year, $location, $price, $car_image);
+$params = [];
+$types = "";
 
-    if (mysqli_stmt_execute($stmt)) {
-        header("Location: AddCar.html?status=success");
-    } else {
-        header("Location: AddCar.html?status=error");
-    }
-
-    mysqli_stmt_close($stmt);
+if (!empty($model)) {
+    $sql .= " AND c.car_model LIKE ?";
+    $params[] = "%$model%";
+    $types .= "s";
 }
+
+if (!empty($year) && is_numeric($year)) {
+    $sql .= " AND c.year = ?";
+    $params[] = $year;
+    $types .= "i";
+}
+
+$sql .= " ORDER BY c.car_id DESC";
+
+$stmt = $conn->prepare($sql);
+
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+
+$cars = [];
+while ($row = $result->fetch_assoc()) {
+    $cars[] = $row;
+}
+
+$stmt->close();
+$conn->close();
+
+header('Content-Type: application/json');
+echo json_encode($cars);
 ?>
