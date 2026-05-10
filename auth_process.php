@@ -4,10 +4,11 @@ require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
     $fullname = $_POST["fullname"];
+    $address = $_POST["address"];
+    $phone = $_POST["phone"];
+    $email = $_POST["email"];
     $username = $_POST["username"];
-    $email = $_POST["useremail"];
-    $phone = $_POST["userphone"];
-    $password = password_hash($_POST["userpwd"], PASSWORD_DEFAULT);
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
     $check = $conn->prepare("SELECT seller_id FROM sellers WHERE username = ? OR email = ?");
     $check->bind_param("ss", $username, $email);
@@ -19,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
         exit();
     }
 
-    $insert = $conn->prepare("INSERT INTO sellers (fullname, username, email, phone, password) VALUES (?, ?, ?, ?, ?)");
-    $insert->bind_param("sssss", $fullname, $username, $email, $phone, $password);
+    $insert = $conn->prepare("INSERT INTO sellers (fullname, address, phone, email, username, password) VALUES (?, ?, ?, ?, ?, ?)");
+    $insert->bind_param("ssssss", $fullname, $address, $phone, $email, $username, $password);
 
     if ($insert->execute()) {
         header("Location: Login.html?msg=registered");
@@ -35,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["log_submit"])) {
-    $log_user = $_POST["log_user"];
-    $log_pwd = $_POST["log_pwd"];
+    $log_user = $_POST["username"];
+    $log_pwd = $_POST["password"];
 
     $query = $conn->prepare("SELECT seller_id, username, password FROM sellers WHERE username = ?");
     $query->bind_param("s", $log_user);
