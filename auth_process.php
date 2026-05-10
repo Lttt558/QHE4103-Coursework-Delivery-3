@@ -1,15 +1,6 @@
 <?php
 session_start();
-
-$host = "localhost";
-$dbuser = "zsm";
-$dbpass = "988980";
-$dbname = "seller_web_db";
-
-$conn = new mysqli($host, $dbuser, $dbpass, $dbname);
-if ($conn->connect_error) {
-    die("DB_CONNECT_FAILED");
-}
+require_once 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
     $fullname = $_POST["fullname"];
@@ -18,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
     $phone = $_POST["userphone"];
     $password = password_hash($_POST["userpwd"], PASSWORD_DEFAULT);
 
-    $check = $conn->prepare("SELECT uid FROM seller_account WHERE username=? OR email=?");
+    $check = $conn->prepare("SELECT seller_id FROM sellers WHERE username = ? OR email = ?");
     $check->bind_param("ss", $username, $email);
     $check->execute();
     $check->store_result();
@@ -28,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
         exit();
     }
 
-    $insert = $conn->prepare("INSERT INTO seller_account (fullname, username, email, phone, password) VALUES (?,?,?,?,?)");
+    $insert = $conn->prepare("INSERT INTO sellers (fullname, username, email, phone, password) VALUES (?, ?, ?, ?, ?)");
     $insert->bind_param("sssss", $fullname, $username, $email, $phone, $password);
 
     if ($insert->execute()) {
@@ -39,13 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
 
     $insert->close();
     $check->close();
+    $conn->close();
+    exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["log_submit"])) {
     $log_user = $_POST["log_user"];
     $log_pwd = $_POST["log_pwd"];
 
-    $query = $conn->prepare("SELECT uid, username, password FROM seller_account WHERE username=?");
+    $query = $conn->prepare("SELECT seller_id, username, password FROM sellers WHERE username = ?");
     $query->bind_param("s", $log_user);
     $query->execute();
     $query->store_result();
@@ -64,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["log_submit"])) {
 
     header("Location: login.html?err=invalid");
     $query->close();
+    $conn->close();
+    exit();
 }
 
 if (isset($_GET["logout"])) {
