@@ -22,9 +22,10 @@ USE `car_sale`;
 CREATE TABLE `sellers` (
   `seller_id` int(11) NOT NULL AUTO_INCREMENT,
   `fullname` varchar(100) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `phone` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`seller_id`),
