@@ -1,31 +1,48 @@
 <?php
-include 'db_connect.php';
+require_once 'config.php';
 
-$model = isset($_GET['model']) ? $_GET['model'] : '';
-$year = isset($_GET['year']) ? $_GET['year'] : '';
+$model = isset($_GET['model']) ? trim($_GET['model']) : '';
+$year = isset($_GET['year']) ? trim($_GET['year']) : '';
 
-$sql = "SELECT * FROM cars WHERE 1=1";
-$params = array();
+$sql = "SELECT c.*, s.fullname as seller_name, s.phone as seller_phone 
+        FROM cars c 
+        LEFT JOIN sellers s ON c.seller_id = s.seller_id 
+        WHERE 1=1";
+
+$params = [];
 $types = "";
 
 if (!empty($model)) {
-    $sql .= " AND car_model LIKE ?";
+    $sql .= " AND c.car_model LIKE ?";
     $params[] = "%$model%";
     $types .= "s";
 }
 
-if (!empty($year)) {
-    $sql .= " AND year = ?";
+if (!empty($year) && is_numeric($year)) {
+    $sql .= " AND c.year = ?";
     $params[] = $year;
-    $types .= "s";
+    $types .= "i";
 }
 
-$stmt = mysqli_prepare($conn, $sql);
+$sql .= " ORDER BY c.car_id DESC";
+
+$stmt = $conn->prepare($sql);
 
 if (!empty($params)) {
-    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    $stmt->bind_param($types, ...$params);
 }
 
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$cars = [];
+while ($row = $result->fetch_assoc()) {
+    $cars[] = $row;
+}
+
+$stmt->close();
+$conn->close();
+
+header('Content-Type: application/json');
+echo json_encode($cars);
 ?>
