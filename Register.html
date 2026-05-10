@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Register - CarNext</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .logo-img {
+                position: absolute;
+                top: 5px;
+                left: 20px;
+                width: 100px;
+                height: auto;
+                z-index: 999;
+            }
+
+            .links {
+                background-color: gray;
+                text-align: center;
+                padding: 15px 10px;
+                margin-top: 10px;
+            }
+
+            .links a {
+                display: inline-block;
+                color: white;
+                font-size: 18px;
+                margin: 5px 10px;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+
+            .links a:hover {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .links a.active {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .register-container {
+                background: #f0f0f0;
+                padding: 60px 20px;
+                min-height: calc(100vh - 220px);
+                display: flex;
+                align-items: center;
+            }
+            .register-box {
+                background: white;
+                border: 1px solid #aaa;
+                width: 100%;
+                max-width: 550px;
+                margin: 0 auto;
+                padding: 30px;
+                border-radius: 8px;
+            }
+            .register-box h2 {
+                margin-bottom: 25px;
+                text-align: center;
+                color: #333;
+            }
+            .form-row {
+                margin-bottom: 20px;
+            }
+            .form-row label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #444;
+            }
+            .form-row input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #777;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            .error-msg {
+                color: #b00;
+                font-size: 13px;
+                min-height: 18px;
+                margin-top: 5px;
+            }
+            .reg-button {
+                padding: 12px 20px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                background: #ddd;
+                border: 1px solid #666;
+                cursor: pointer;
+                border-radius: 4px;
+                font-size: 16px;
+                min-width: 120px;
+            }
+            #regBtn {
+                background: #28a745;
+                color: white;
+                border: none;
+            }
+            #regBtn:hover {
+                background-color: #218838;
+            }
+
+            .footer {
+                background-color: dimgray;
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+
+            @media (max-width: 768px) {
+                .links a {
+                    font-size: 16px;
+                    padding: 8px 12px;
+                }
+                .register-box {
+                    padding: 25px 20px;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .logo-img {
+                    width: 80px;
+                    left: 10px;
+                }
+                .register-box {
+                    padding: 20px 15px;
+                }
+                .reg-button {
+                    width: 100%;
+                    margin-right: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <img src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/LOGO.jpg?raw=true" class="logo-img">
+        
+        <nav>
+            <div class="logo"></div>
+            <div class="links">
+                <a href="Home.html">HOME</a>
+                <a href="Search.html">SEARCH</a>
+                <a href="AddCar.html">SELL</a>
+                <a href="Login.html">LOGIN</a>
+                <a href="Register.html">REGISTER</a>
+            </div>
+        </nav>
+
+        <div class="register-container">
+            <div class="register-box">
+                <h2>User Registration</h2>
+                <form id="regForm">
+                    <div class="form-row">
+                        <label>Full name</label>
+                        <input type="text" id="fullname">
+                        <div class="error-msg" id="eName"></div>
+                    </div>
+                    <div class="form-row">
+                        <label>Address</label>
+                        <input type="text" id="address">
+                        <div class="error-msg" id="eAddr"></div>
+                    </div>
+                    <div class="form-row">
+                        <label>Phone (China)</label>
+                        <input type="text" id="phone">
+                        <div class="error-msg" id="ePhone"></div>
+                    </div>
+                    <div class="form-row">
+                        <label>Email</label>
+                        <input type="text" id="email">
+                        <div class="error-msg" id="eEmail"></div>
+                    </div>
+                    <div class="form-row">
+                        <label>Username</label>
+                        <input type="text" id="username">
+                        <div class="error-msg" id="eUser"></div>
+                    </div>
+                    <div class="form-row">
+                        <label>Password</label>
+                        <input type="password" id="password">
+                        <div class="error-msg" id="ePass"></div>
+                    </div>
+                    <div>
+                        <button type="submit" id="regBtn" class="reg-button">Register</button>
+                        <button type="button" id="clearBtn" class="reg-button">Clear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            let nameInp = document.getElementById('fullname');
+            let addrInp = document.getElementById('address');
+            let phoneInp = document.getElementById('phone');
+            let emailInp = document.getElementById('email');
+            let userInp = document.getElementById('username');
+            let passInp = document.getElementById('password');
+
+            let eName = document.getElementById('eName');
+            let eAddr = document.getElementById('eAddr');
+            let ePhone = document.getElementById('ePhone');
+            let eEmail = document.getElementById('eEmail');
+            let eUser = document.getElementById('eUser');
+            let ePass = document.getElementById('ePass');
+
+            const nameRe = /^[A-Za-z\s]+$/;
+            const addrRe = /^[A-Za-z0-9\s]+$/;
+            const phoneRe = /^1[0-9]{10}$/;
+            const emailRe = /^[^\s@]+@[^\s@]+\.(cn|com)$/i;
+            const userRe = /^[A-Za-z0-9]{6,}$/;
+
+            function checkName() {
+                let v = nameInp.value.trim();
+                if (v === '') { eName.innerText = 'Required'; return false; }
+                if (!nameRe.test(v)) { eName.innerText = 'Only letters and spaces'; return false; }
+                eName.innerText = ''; return true;
+            }
+            function checkAddr() {
+                let v = addrInp.value.trim();
+                if (v === '') { eAddr.innerText = 'Required'; return false; }
+                if (!addrRe.test(v)) { eAddr.innerText = 'Only letters, numbers, spaces'; return false; }
+                eAddr.innerText = ''; return true;
+            }
+            function checkPhone() {
+                let v = phoneInp.value.trim();
+                if (v === '') { ePhone.innerText = 'Required'; return false; }
+                if (!phoneRe.test(v)) { ePhone.innerText = '11 digits starting with 1'; return false; }
+                ePhone.innerText = ''; return true;
+            }
+            function checkEmail() {
+                let v = emailInp.value.trim();
+                if (v === '') { eEmail.innerText = 'Required'; return false; }
+                if (!emailRe.test(v)) { eEmail.innerText = 'Must contain @, end .cn or .com'; return false; }
+                eEmail.innerText = ''; return true;
+            }
+            function checkUser() {
+                let v = userInp.value.trim();
+                if (v === '') { eUser.innerText = 'Required'; return false; }
+                if (!userRe.test(v)) { eUser.innerText = 'At least 6 letters/numbers'; return false; }
+                eUser.innerText = ''; return true;
+            }
+            function checkPass() {
+                let v = passInp.value;
+                if (v === '') { ePass.innerText = 'Required'; return false; }
+                if (!userRe.test(v)) { ePass.innerText = 'At least 6 letters/numbers'; return false; }
+                ePass.innerText = ''; return true;
+            }
+            
+            nameInp.oninput = checkName;
+            addrInp.oninput = checkAddr;
+            phoneInp.oninput = checkPhone;
+            emailInp.oninput = checkEmail;
+            userInp.oninput = checkUser;
+            passInp.oninput = checkPass;
+
+            document.getElementById('regForm').onsubmit = function(e) {
+                e.preventDefault();
+                let ok = checkName() & checkAddr() & checkPhone() & checkEmail() & checkUser() & checkPass();
+                if (ok) {
+                    alert('Registered (demo)');
+                    this.reset();
+                    eName.innerText = eAddr.innerText = ePhone.innerText = eEmail.innerText = eUser.innerText = ePass.innerText = '';
+                }
+            };
+            
+            document.getElementById('clearBtn').onclick = function() {
+                document.getElementById('regForm').reset();
+                eName.innerText = eAddr.innerText = ePhone.innerText = eEmail.innerText = eUser.innerText = ePass.innerText = '';
+            };
+        </script>
+
+        <div class="footer">
+            © 2026 CarNext Car Trading System | All Rights Reserved
+        </div>
+    </body>
+</html>
