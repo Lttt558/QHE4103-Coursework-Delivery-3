@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
     $check->store_result();
 
     if ($check->num_rows > 0) {
-        header("Location: register.html?err=exists");
+        header("Location: Register.html?err=exists");
         exit();
     }
 
@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["reg_submit"])) {
     $insert->bind_param("sssss", $fullname, $username, $email, $phone, $password);
 
     if ($insert->execute()) {
-        header("Location: login.html?msg=registered");
+        header("Location: Login.html?msg=registered");
     } else {
-        header("Location: register.html?err=failed");
+        header("Location: Register.html?err=failed");
     }
 
     $insert->close();
@@ -50,12 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["log_submit"])) {
         if (password_verify($log_pwd, $shash)) {
             $_SESSION["seller_uid"] = $sid;
             $_SESSION["seller_name"] = $suser;
-            header("Location: dashboard.html");
+            header("Location: AddCar.html");
             exit();
         }
     }
 
-    header("Location: login.html?err=invalid");
+    header("Location: Login.html?err=invalid");
     $query->close();
     $conn->close();
     exit();
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["log_submit"])) {
 if (isset($_GET["logout"])) {
     session_unset();
     session_destroy();
-    header("Location: login.html");
+    header("Location: Home.html");
     exit();
 }
 ?>
