@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home - CarNext</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .logo-img {
+                position: absolute;
+                top: 5px;
+                left: 20px;
+                width: 100px;
+                height: auto;
+                z-index: 999;
+            }
+
+            .links {
+                background-color: gray;
+                text-align: center;
+                padding: 15px 10px;
+                margin-top: 10px;
+            }
+
+            .links a {
+                display: inline-block;
+                color: white;
+                font-size: 18px;
+                margin: 5px 10px;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+
+            .links a:hover {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .links a.active {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .banner {
+                background-image: url(https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/index-background.jpg?raw=true);
+                background-size: cover;
+                background-position: center;
+                height: 400px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 32px;
+                text-align: center;
+                padding: 0 20px;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+
+            .quick-menu {
+                max-width: 1000px;
+                margin: 0 auto 40px;
+                display: flex;
+                gap: 20px;
+                padding: 0 20px;
+                flex-wrap: wrap;
+            }
+            .menu-item {
+                flex: 1;
+                min-width: 200px;
+                background: white;
+                padding: 20px;
+                text-align: center;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 30px;
+                transition: 0.3s;
+            }
+            .menu-item:hover {
+                background: #f5f5f5;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            .section-title {
+                color: red;
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 30px;
+                border-left: 5px solid red;
+                padding-left: 15px;
+            }
+
+            .car-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 30px;
+                margin-bottom: 40px;
+            }
+            .car-card {
+                border: 1px solid #eee;
+                border-radius: 8px;
+                overflow: hidden;
+                background: white;
+                transition: 0.3s;
+            }
+            .car-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+            .car-img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                background: #ddd;
+            }
+            .car-info {
+                padding: 15px;
+            }
+            .car-title {
+                font-size: 1.1rem;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+            .car-price {
+                color: #007bff;
+                font-weight: bold;
+            }
+
+            .footer {
+                background-color: dimgray;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            @media (max-width: 768px) {
+                .banner {
+                    height: 300px;
+                    font-size: 24px;
+                }
+                .section-title {
+                    font-size: 24px;
+                }
+                .car-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                }
+            }
+
+            @media (max-width: 576px) {
+                .logo-img {
+                    width: 80px;
+                    left: 10px;
+                }
+                .links a {
+                    font-size: 16px;
+                    padding: 8px 12px;
+                }
+                .banner {
+                    height: 250px;
+                    font-size: 20px;
+                }
+                .quick-menu {
+                    flex-direction: column;
+                    gap: 15px;
+                }
+                .menu-item {
+                    margin-top: 20px;
+                }
+                .car-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <img src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/LOGO.jpg?raw=true" class="logo-img">
+        
+        <nav>
+            <div class="logo"></div>
+            <div class="links">
+                <a href="Home.html">HOME</a>
+                <a href="Search.html">SEARCH</a>
+                <a href="AddCar.html">SELL</a>
+                <a href="Login.html">LOGIN</a>
+                <a href="Register.html">REGISTER</a>
+            </div>
+        </nav>
+        
+        <div class="banner">
+            Welcome to CarNext - Get Your Next Car
+        </div>
+
+        <div class="quick-menu">
+            <div class="menu-item" onclick="location.href='Search.html'">Browse Cars</div>
+            <div class="menu-item" onclick="location.href='AddCar.html'">Sell Cars</div>
+            <div class="menu-item" onclick="location.href='Login.html'">User Login</div>
+        </div>
+
+        <div class="container">
+            <div class="section-title">Hot Recommended</div>
+            <div class="car-grid">
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2022-Toyota-GR-86-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Toyota GR 86</div>
+                        <div class="car-price">RMB308,000</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2018-Ford-Mustang-GT-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Ford Mustang GT</div>
+                        <div class="car-price">RMB258,000</div>
+                    </div>
+                </div>
+                
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2022-BMW-M135i-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">BMW M135i</div>
+                        <div class="car-price">RMB168,800</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2022-Kia-Stinger-GT-002-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Kia Stinger GT</div>
+                        <div class="car-price">RMB148,000</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2017-Volvo-S90-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Volvo S90</div>
+                        <div class="car-price">RMB118,000</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <img class="car-img" src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/2018-Tesla-Model-3-001-1536.jpg?raw=true">
+                    <div class="car-info">
+                        <div class="car-title">Tesla Model 3</div>
+                        <div class="car-price">RMB99,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 CarNext Car Trading System | All Rights Reserved
+        </div>
+    </body>
+</html>
