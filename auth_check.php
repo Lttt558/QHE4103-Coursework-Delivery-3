@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION["seller_uid"])) {
-    header("Location: login.html");
+    header("Location: Login.html");
     exit();
 }
 ?>
