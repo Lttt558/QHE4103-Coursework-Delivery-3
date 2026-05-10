@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login - CarNext</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            .logo-img {
+                position: absolute;
+                top: 5px;
+                left: 20px;
+                width: 100px;
+                height: auto;
+                z-index: 999;
+            }
+
+            .links {
+                background-color: gray;
+                text-align: center;
+                padding: 15px 10px;
+                margin-top: 10px;
+            }
+
+            .links a {
+                display: inline-block;
+                color: white;
+                font-size: 18px;
+                margin: 5px 10px;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+
+            .links a:hover {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .links a.active {
+                background-color: darkgray;
+                color: black;
+            }
+
+            .login-container {
+                background: #f0f0f0;
+                padding: 80px 20px;
+                min-height: calc(100vh - 220px);
+                display: flex;
+                align-items: center;
+            }
+            .login-box {
+                background: white;
+                border: 1px solid #aaa;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 30px;
+                border-radius: 8px;
+            }
+            .login-box h2 {
+                margin-bottom: 25px;
+                text-align: center;
+                color: #333;
+            }
+            .form-row {
+                margin-bottom: 20px;
+            }
+            .form-row label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #444;
+            }
+            .form-row input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 1px solid #777;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            .error-msg {
+                color: #b00;
+                font-size: 13px;
+                min-height: 18px;
+                margin-top: 5px;
+            }
+            .submit-btn {
+                width: 100%;
+                padding: 12px;
+                background: #28a745;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+            .submit-btn:hover {
+                background-color: #218838;
+            }
+
+            .footer {
+                background-color: dimgray;
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+
+            @media (max-width: 768px) {
+                .links a {
+                    font-size: 16px;
+                    padding: 8px 12px;
+                }
+                .login-container {
+                    padding: 60px 15px;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .logo-img {
+                    width: 80px;
+                    left: 10px;
+                }
+                .login-box {
+                    padding: 20px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <img src="https://github.com/Lttt558/QHE4103-Coursework-Delivery-1/blob/feature-homepage/LOGO.jpg?raw=true" class="logo-img">
+        
+        <nav>
+            <div class="logo"></div>
+            <div class="links">
+                <a href="Home.html">HOME</a>
+                <a href="Search.html">SEARCH</a>
+                <a href="AddCar.html">SELL</a>
+                <a href="Login.html">LOGIN</a>
+                <a href="Register.html">REGISTER</a>
+            </div>
+        </nav>
+
+        <div class="login-container">
+            <div class="login-box">
+                <h2>User Login</h2>
+                <form id="loginForm">
+                    <div class="form-row">
+                        <label>Username</label>
+                        <input type="text" id="username">
+                        <div class="error-msg" id="eUser"></div>
+                    </div>
+                    <div class="form-row">
+                        <label>Password</label>
+                        <input type="password" id="password">
+                        <div class="error-msg" id="ePass"></div>
+                    </div>
+                    <button type="submit" class="submit-btn">Log in</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            let userInp = document.getElementById('username');
+            let passInp = document.getElementById('password');
+            let eUser = document.getElementById('eUser');
+            let ePass = document.getElementById('ePass');
+
+            userInp.oninput = function() {
+                if (userInp.value.trim() !== '') eUser.innerText = '';
+                else eUser.innerText = 'Required';
+            };
+            passInp.oninput = function() {
+                if (passInp.value !== '') ePass.innerText = '';
+                else ePass.innerText = 'Required';
+            };
+
+            document.getElementById('loginForm').onsubmit = function(e) {
+                e.preventDefault();
+                let uOk = userInp.value.trim() !== '';
+                let pOk = passInp.value !== '';
+                if (!uOk) eUser.innerText = 'Required';
+                if (!pOk) ePass.innerText = 'Required';
+                if (uOk && pOk) {
+                    alert('Login successful (demo)');
+                    this.reset();
+                    eUser.innerText = ePass.innerText = '';
+                }
+            };
+        </script>
+
+        <div class="footer">
+            © 2026 CarNext Car Trading System | All Rights Reserved
+        </div>
+    </body>
+</html>
